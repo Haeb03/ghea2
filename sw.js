@@ -1,4 +1,4 @@
-const CACHE_NAME = "ghea2-cache-v1";
+const CACHE_NAME = "ghea2-cache-v2";
 const CACHE_PREFIX = "ghea2-";
 
 const APP_SHELL = [
@@ -6,8 +6,7 @@ const APP_SHELL = [
   "./index.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png",
-  "./ghea-stage-v2.webp"
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", event => {
@@ -22,16 +21,18 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys
-          .filter(key =>
-            key.startsWith(CACHE_PREFIX) &&
-            key !== CACHE_NAME
-          )
-          .map(key => caches.delete(key))
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => {
+        return Promise.all(
+          keys
+            .filter(key =>
+              key.startsWith(CACHE_PREFIX) &&
+              key !== CACHE_NAME
+            )
+            .map(key => caches.delete(key))
+        );
+      })
+      .then(() => self.clients.claim())
   );
 });
 
