@@ -1228,6 +1228,84 @@ main{
 }
 
 </style>
+<script>
+let ghea2InstallPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  ghea2InstallPrompt = event;
+
+  document.addEventListener("DOMContentLoaded", mostrarEstadoInstalacion);
+  if (document.readyState !== "loading") {
+    mostrarEstadoInstalacion();
+  }
+});
+
+window.addEventListener("appinstalled", () => {
+  const box = document.getElementById("ghea2-pwa-test");
+  if (box) {
+    box.innerHTML = "✅ Ghea2 instalada correctamente";
+  }
+});
+
+function mostrarEstadoInstalacion() {
+  if (document.getElementById("ghea2-pwa-test")) return;
+
+  const box = document.createElement("div");
+  box.id = "ghea2-pwa-test";
+
+  box.style.position = "fixed";
+  box.style.bottom = "10px";
+  box.style.left = "50%";
+  box.style.transform = "translateX(-50%)";
+  box.style.zIndex = "99999";
+  box.style.background = "#111";
+  box.style.color = "white";
+  box.style.padding = "10px 14px";
+  box.style.borderRadius = "10px";
+  box.style.fontSize = "14px";
+  box.style.textAlign = "center";
+  box.style.boxShadow = "0 2px 12px rgba(0,0,0,.5)";
+
+  box.innerHTML = `
+    ✅ Chrome reconoce Ghea2 como instalable
+    <br>
+    <button
+      onclick="instalarGhea2()"
+      style="
+        margin-top:8px;
+        padding:7px 14px;
+        border:0;
+        border-radius:7px;
+        font-weight:bold;
+      "
+    >
+      Instalar Ghea2
+    </button>
+  `;
+
+  document.body.appendChild(box);
+}
+
+async function instalarGhea2() {
+  if (!ghea2InstallPrompt) {
+    alert("Chrome todavía no habilitó la instalación.");
+    return;
+  }
+
+  ghea2InstallPrompt.prompt();
+
+  const resultado =
+    await ghea2InstallPrompt.userChoice;
+
+  console.log(
+    "Resultado instalación:",
+    resultado.outcome
+  );
+
+  ghea2InstallPrompt = null;
+}
+</script>
 </head>
 
 <body>
