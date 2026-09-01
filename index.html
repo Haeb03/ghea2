@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#1f3a2b">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Ghea Companion</title>
+  <title>Ghea2</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icon-192.png">
   <link rel="apple-touch-icon" href="./icon-192.png">
@@ -87,7 +87,6 @@ main{width:100%;max-width:1120px;margin:auto;padding:8px;min-height:calc(100vh -
 .qr-frame{position:absolute;inset:14%;border:2px solid #d8b65b;box-shadow:0 0 0 999px rgba(0,0,0,.18)}
 .qr-status{margin-top:9px;min-height:34px;text-align:center;font-size:12px;color:#cfc09c}.qr-status.error{color:#ef9a8e}.qr-status.ok{color:#a9d781}
 .qr-help{margin-top:6px;font-size:10px;color:#998f76;text-align:center}
-
 
 @media(max-width:700px) and (orientation:portrait){
  .main-stats{grid-template-columns:1fr}
@@ -217,7 +216,6 @@ main{width:100%;max-width:1120px;margin:auto;padding:8px;min-height:calc(100vh -
  </div>
 </div>
 
-
 <div class="qr-overlay" id="qrOverlay">
   <div class="qr-panel">
     <div class="qr-top">
@@ -234,8 +232,9 @@ main{width:100%;max-width:1120px;margin:auto;padding:8px;min-height:calc(100vh -
 </div>
 
 <script>
-const STORAGE_KEY="ghea-state-v3";
-const GOLD_STORAGE_KEY="ghea-gold-v1";
+const STORAGE_KEY="ghea2-state-v1";
+const GOLD_STORAGE_KEY="ghea2-gold-v1";
+
 const allyFormation=document.getElementById("allyFormation");
 const enemyFormation=document.getElementById("enemyFormation");
 const overlay=document.getElementById("overlay");
@@ -318,11 +317,13 @@ function parseEncounterQR(text){
  }
  return enemies;
 }
+
 function loadEncounterFromQR(text){
  gameState.enemies=parseEncounterQR(text);
  moveMode=false;movingSide=null;movingSlot=null;
  save();render();
 }
+
 async function openQRScanner(){
  qrOverlay.classList.add("show");
  qrStatus.textContent="Preparando cámara…";qrStatus.className="qr-status";
@@ -345,6 +346,7 @@ async function openQRScanner(){
   stopQRCamera(false);
  }
 }
+
 async function scanQRFrame(){
  if(!qrRunning||!qrDetector)return;
  try{
@@ -366,39 +368,113 @@ async function scanQRFrame(){
  }catch(e){}
  if(qrRunning)setTimeout(scanQRFrame,180);
 }
+
 function stopQRCamera(hide=true){
  qrRunning=false;
  if(qrStream){qrStream.getTracks().forEach(t=>t.stop());qrStream=null}
  qrVideo.srcObject=null;
  if(hide)qrOverlay.classList.remove("show");
 }
+
 function closeQRScanner(){stopQRCamera(true)}
 
-allyFormation.addEventListener("click",handleSlotClick);enemyFormation.addEventListener("click",handleSlotClick);
-document.querySelectorAll("[data-editor-stat]").forEach(function(button){button.addEventListener("click",function(){changeStat(button.dataset.editorStat,Number(button.dataset.editorAmount))})});
+allyFormation.addEventListener("click",handleSlotClick);
+enemyFormation.addEventListener("click",handleSlotClick);
+
+document.querySelectorAll("[data-editor-stat]").forEach(function(button){
+ button.addEventListener("click",function(){
+  changeStat(button.dataset.editorStat,Number(button.dataset.editorAmount))
+ })
+});
+
 ["vida","escudo"].forEach(function(stat){
  const input=document.getElementById(stat+"Value");
  input.addEventListener("change",function(){setEditorStat(stat,input.value)});
- input.addEventListener("keydown",function(e){if(e.key==="Enter"){setEditorStat(stat,input.value);input.blur()}})
+ input.addEventListener("keydown",function(e){
+  if(e.key==="Enter"){
+   setEditorStat(stat,input.value);
+   input.blur()
+  }
+ })
 });
-document.querySelectorAll("[data-gold]").forEach(function(button){button.addEventListener("click",function(){setGold(groupGold+Number(button.dataset.gold))})});
+
+document.querySelectorAll("[data-gold]").forEach(function(button){
+ button.addEventListener("click",function(){
+  setGold(groupGold+Number(button.dataset.gold))
+ })
+});
+
 goldValue.addEventListener("change",function(){setGold(goldValue.value)});
-goldValue.addEventListener("keydown",function(e){if(e.key==="Enter"){setGold(goldValue.value);goldValue.blur()}});
-nameInput.addEventListener("input",function(){if(selectedSide===null||selectedSlot===null)return;const f=getTeam(selectedSide)[selectedSlot];f.name=nameInput.value;save();render()});
+goldValue.addEventListener("keydown",function(e){
+ if(e.key==="Enter"){
+  setGold(goldValue.value);
+  goldValue.blur()
+ }
+});
+
+nameInput.addEventListener("input",function(){
+ if(selectedSide===null||selectedSlot===null)return;
+ const f=getTeam(selectedSide)[selectedSlot];
+ f.name=nameInput.value;
+ save();
+ render()
+});
+
 document.getElementById("closeBtn").addEventListener("click",closeEditor);
-document.getElementById("deleteBtn").addEventListener("click",function(){if(selectedSide===null||selectedSlot===null)return;getTeam(selectedSide)[selectedSlot]=null;save();closeEditor();render()});
-document.getElementById("moveBtn").addEventListener("click",function(){if(selectedSide===null||selectedSlot===null)return;movingSide=selectedSide;movingSlot=selectedSlot;moveMode=true;closeEditor();render()});
-document.getElementById("cancelMoveBtn").addEventListener("click",function(){moveMode=false;movingSide=null;movingSlot=null;render()});
+
+document.getElementById("deleteBtn").addEventListener("click",function(){
+ if(selectedSide===null||selectedSlot===null)return;
+ getTeam(selectedSide)[selectedSlot]=null;
+ save();
+ closeEditor();
+ render()
+});
+
+document.getElementById("moveBtn").addEventListener("click",function(){
+ if(selectedSide===null||selectedSlot===null)return;
+ movingSide=selectedSide;
+ movingSlot=selectedSlot;
+ moveMode=true;
+ closeEditor();
+ render()
+});
+
+document.getElementById("cancelMoveBtn").addEventListener("click",function(){
+ moveMode=false;
+ movingSide=null;
+ movingSlot=null;
+ render()
+});
+
 document.getElementById("qrBtn").addEventListener("click",openQRScanner);
 document.getElementById("qrCloseBtn").addEventListener("click",closeQRScanner);
-qrOverlay.addEventListener("click",function(event){if(event.target===qrOverlay)closeQRScanner()});
+
+qrOverlay.addEventListener("click",function(event){
+ if(event.target===qrOverlay)closeQRScanner()
+});
+
 document.getElementById("resetBtn").addEventListener("click",function(){
  if(!confirm("¿Iniciar una nueva partida?\\n\\nEl oro del grupo se conservará."))return;
- gameState=createInitialState();moveMode=false;movingSide=null;movingSlot=null;closeEditor();save();render()
+ gameState=createInitialState();
+ moveMode=false;
+ movingSide=null;
+ movingSlot=null;
+ closeEditor();
+ save();
+ render()
 });
-overlay.addEventListener("click",function(event){if(event.target===overlay)closeEditor()});
+
+overlay.addEventListener("click",function(event){
+ if(event.target===overlay)closeEditor()
+});
+
 render();
-if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("./sw.js")})}
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",function(){
+  navigator.serviceWorker.register("./sw.js")
+ })
+}
 </script>
 </body>
 </html>
