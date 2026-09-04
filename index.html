@@ -378,7 +378,13 @@ main{
  font-size:0;
  filter:drop-shadow(0 4px 3px #000)
 }
-
+.fighter-avatar{
+ width:64px;
+ height:64px;
+ object-fit:contain;
+ display:block;
+ filter:drop-shadow(0 4px 3px #000);
+}
 .fighter-icon:before{
  content:"";
  display:block;
@@ -2231,7 +2237,19 @@ function getStatuses(f){
  return s;
 
 }
+function getEnemyAvatar(name){
 
+ const n=String(name||"")
+  .trim()
+  .toLowerCase();
+
+ if(n.startsWith("goblin arquero")){
+  return "./avatars/goblin-arquero.png";
+ }
+
+ return null;
+
+  }
 /* ===== PROGRESIÓN ===== */
 
 function getActions(fighter){
@@ -2328,11 +2346,27 @@ function renderFormation(side,element){
     ?getClassName(fighter.clase)
     :fighter.name;
 
-   slot.innerHTML=`
-    <div class="fighter">
-     <div class="fighter-icon">
-      ${side==="ally"?"🛡️":"👹"}
-     </div>
+   const enemyAvatar=
+ side==="enemy"
+ ?getEnemyAvatar(fighter.name)
+ :null;
+
+slot.innerHTML=`
+ <div class="fighter">
+
+  ${
+   enemyAvatar
+   ?`<img
+      class="fighter-avatar"
+      src="${enemyAvatar}"
+      alt="${escapeHtml(displayName)}"
+     >`
+   :`
+    <div class="fighter-icon">
+     ${side==="ally"?"🛡️":"👹"}
+    </div>
+   `
+     }
 
      <div class="fighter-name">
       ${escapeHtml(displayName)}
