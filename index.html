@@ -2273,7 +2273,18 @@ function getEnemyAvatar(name){
  return null;
 
 }
-/* ===== PROGRESIÓN ===== */
+function getAllyAvatar(clase){
+
+ const avatars={
+  guerrero:"./avatars/guerrero.png",
+  mago:"./avatars/mago-humano.png",
+  asesina:"./avatars/asesina.png"
+ };
+
+ return avatars[clase] || null;
+
+}
+  /* ===== PROGRESIÓN ===== */
 
 function getActions(fighter){
 
@@ -2378,10 +2389,10 @@ slot.innerHTML=`
  <div class="fighter">
 
   ${
-   enemyAvatar
-   ?`<img
+   fighterAvatar
+?`<img
       class="fighter-avatar"
-      src="${enemyAvatar}"
+      src="${fighterAvatar}"
       alt="${escapeHtml(displayName)}"
      >`
    :`
