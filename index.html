@@ -2243,13 +2243,36 @@ function getEnemyAvatar(name){
   .trim()
   .toLowerCase();
 
- if(n.startsWith("goblin arquero")){
-  return "./avatars/goblin-arquero.png";
+ const avatars=[
+  ["goblin arquero","goblin-arquero.png"],
+  ["señor goblin","senor-goblin.png"],
+  ["senor goblin","senor-goblin.png"],
+  ["lobo adiestrado","lobo-adiestrado.png"],
+  ["goblin chamán","goblin-chaman.png"],
+  ["goblin chaman","goblin-chaman.png"],
+  ["goblin guerrero","goblin-guerrero.png"],
+  ["goblin saqueador","goblin-saqueador.png"],
+  ["jabalí salvaje","jabali-salvaje.png"],
+  ["jabali salvaje","jabali-salvaje.png"],
+  ["profesor alaric","profesor-alaric.png"],
+  ["elemental de fuego","elemental-fuego.png"],
+  ["espíritu del bosque","espiritu-bosque.png"],
+  ["espiritu del bosque","espiritu-bosque.png"],
+  ["muñeco de entrenamiento","muneco-entrenamiento.png"],
+  ["muneco de entrenamiento","muneco-entrenamiento.png"]
+ ];
+
+ for(const [enemy,file] of avatars){
+
+  if(n.startsWith(enemy)){
+   return "./avatars/"+file;
+  }
+
  }
 
  return null;
 
-  }
+}
 /* ===== PROGRESIÓN ===== */
 
 function getActions(fighter){
