@@ -2380,10 +2380,10 @@ function renderFormation(side,element){
     ?getClassName(fighter.clase)
     :fighter.name;
 
-   const enemyAvatar=
+   const fighterAvatar=
  side==="enemy"
  ?getEnemyAvatar(fighter.name)
- :null;
+ :getAllyAvatar(fighter.clase);
 
 slot.innerHTML=`
  <div class="fighter">
