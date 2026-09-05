@@ -1474,7 +1474,13 @@ async function instalarGhea2() {
    <button data-gold="5">+5</button>
 
   </div>
-
+  <button
+   class="music-button"
+   id="musicBtn"
+   aria-label="Música"
+  >
+   🎵 Música
+  </button>
   <button
    class="qr-button"
    id="qrBtn"
@@ -1955,7 +1961,116 @@ async function instalarGhea2() {
  </div>
 
 </div>
+<!-- ===== MÚSICA ===== -->
 
+<div
+ class="music-overlay"
+ id="musicOverlay"
+>
+
+ <div class="music-panel">
+
+  <div class="music-top">
+
+   <div class="music-title">
+    🎵 MÚSICA
+   </div>
+
+   <button
+    class="close-button"
+    id="musicCloseBtn"
+    aria-label="Cerrar música"
+   >
+    ×
+   </button>
+
+  </div>
+
+  <div
+   class="music-now"
+   id="musicNow"
+  >
+   Elegí un tema.
+  </div>
+
+  <div class="music-list">
+
+   <button
+    class="music-track"
+    data-music="1"
+   >
+    🎵 Tema de Combate 1
+   </button>
+
+   <button
+    class="music-track"
+    data-music="2"
+   >
+    🎵 Tema de Combate 2
+   </button>
+
+   <button
+    class="music-track"
+    data-music="3"
+   >
+    🎵 Tema de Combate 3
+   </button>
+
+   <button
+    class="music-track"
+    data-music="4"
+   >
+    🎵 Tema de Combate 4
+   </button>
+
+  </div>
+
+  <div class="music-controls">
+
+   <button
+    class="music-control"
+    id="musicPlayBtn"
+   >
+    ▶️
+   </button>
+
+   <button
+    class="music-control"
+    id="musicPauseBtn"
+   >
+    ⏸️
+   </button>
+
+   <button
+    class="music-control"
+    id="musicStopBtn"
+   >
+    ⏹️
+   </button>
+
+  </div>
+
+  <div class="music-volume">
+
+   <span>🔉</span>
+
+   <input
+    id="musicVolume"
+    type="range"
+    min="0"
+    max="1"
+    step="0.05"
+    value="0.7"
+    aria-label="Volumen"
+   >
+
+   <span>🔊</span>
+
+  </div>
+
+ </div>
+
+</div>
 <!-- ===== QR ===== -->
 
 <div
@@ -3336,7 +3451,227 @@ function closeQRScanner(){
  stopQRCamera(true);
 
 }
+/* ===== MÚSICA ===== */
 
+const MUSIC_TRACKS={
+
+ 1:{
+  name:"Tema de Combate 1",
+  url:"https://haeb03.github.io/ghea-media/Musica1.mp3"
+ },
+
+ 2:{
+  name:"Tema de Combate 2",
+  url:"https://haeb03.github.io/ghea-media/Musica2.mp3"
+ },
+
+ 3:{
+  name:"Tema de Combate 3",
+  url:"https://haeb03.github.io/ghea-media/Musica3.mp3"
+ },
+
+ 4:{
+  name:"Tema de Combate 4",
+  url:"https://haeb03.github.io/ghea-media/Musica4.mp3"
+ }
+
+};
+
+const musicOverlay=
+ document.getElementById("musicOverlay");
+
+const musicNow=
+ document.getElementById("musicNow");
+
+const musicVolume=
+ document.getElementById("musicVolume");
+
+const musicPlayer=
+ new Audio();
+
+musicPlayer.loop=true;
+musicPlayer.preload="metadata";
+musicPlayer.volume=.7;
+
+let selectedMusic=null;
+
+function openMusicPanel(){
+
+ musicOverlay.classList.add("show");
+
+}
+
+function closeMusicPanel(){
+
+ musicOverlay.classList.remove("show");
+
+}
+
+function selectMusic(number){
+
+ const track=MUSIC_TRACKS[number];
+
+ if(!track){
+  return;
+ }
+
+ selectedMusic=Number(number);
+
+ musicPlayer.pause();
+
+ musicPlayer.src=track.url;
+ musicPlayer.currentTime=0;
+
+ musicNow.textContent=
+  "▶ "+track.name;
+
+ document
+  .querySelectorAll(".music-track")
+  .forEach(function(button){
+
+   button.classList.toggle(
+    "playing",
+    Number(button.dataset.music)===selectedMusic
+   );
+
+  });
+
+ musicPlayer.play().catch(function(){
+
+  musicNow.textContent=
+   "Tocá ▶️ para reproducir.";
+
+ });
+
+}
+
+function playMusic(){
+
+ if(!selectedMusic){
+
+  musicNow.textContent=
+   "Elegí primero un tema.";
+
+  return;
+
+ }
+
+ musicPlayer.play().then(function(){
+
+  musicNow.textContent=
+   "▶ "+MUSIC_TRACKS[selectedMusic].name;
+
+ }).catch(function(){
+
+  musicNow.textContent=
+   "No pude iniciar la música.";
+
+ });
+
+}
+
+function pauseMusic(){
+
+ musicPlayer.pause();
+
+ if(selectedMusic){
+
+  musicNow.textContent=
+   "⏸ "+MUSIC_TRACKS[selectedMusic].name;
+
+ }
+
+}
+
+function stopMusic(){
+
+ musicPlayer.pause();
+
+ try{
+  musicPlayer.currentTime=0;
+ }catch(e){}
+
+ if(selectedMusic){
+
+  musicNow.textContent=
+   "⏹ "+MUSIC_TRACKS[selectedMusic].name;
+
+ }
+
+}
+
+document
+ .getElementById("musicBtn")
+ .addEventListener(
+  "click",
+  openMusicPanel
+ );
+
+document
+ .getElementById("musicCloseBtn")
+ .addEventListener(
+  "click",
+  closeMusicPanel
+ );
+
+document
+ .querySelectorAll(".music-track")
+ .forEach(function(button){
+
+  button.addEventListener(
+   "click",
+   function(){
+
+    selectMusic(
+     button.dataset.music
+    );
+
+   }
+  );
+
+ });
+
+document
+ .getElementById("musicPlayBtn")
+ .addEventListener(
+  "click",
+  playMusic
+ );
+
+document
+ .getElementById("musicPauseBtn")
+ .addEventListener(
+  "click",
+  pauseMusic
+ );
+
+document
+ .getElementById("musicStopBtn")
+ .addEventListener(
+  "click",
+  stopMusic
+ );
+
+musicVolume.addEventListener(
+ "input",
+ function(){
+
+  musicPlayer.volume=
+   Number(musicVolume.value);
+
+ }
+);
+
+musicOverlay.addEventListener(
+ "click",
+ function(event){
+
+  if(event.target===musicOverlay){
+   closeMusicPanel();
+  }
+
+ }
+);
 /* ===== EVENTOS ===== */
 
 allyFormation.addEventListener(
