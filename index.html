@@ -173,7 +173,136 @@ header{
  padding-left:11px;
  padding-right:11px
 }
+/* ===== MÚSICA ===== */
 
+.music-button{
+ border:1px solid #92733e;
+ border-radius:3px;
+ padding:9px 11px;
+ color:#efdbac;
+ font-weight:bold;
+ font-size:14px;
+ background:linear-gradient(#332619,#17110c);
+ box-shadow:inset 0 0 0 2px #0c0906,0 2px 7px #000b
+}
+
+.music-overlay{
+ position:fixed;
+ inset:0;
+ display:none;
+ align-items:flex-end;
+ justify-content:center;
+ padding:8px;
+ background:rgba(0,0,0,.62);
+ backdrop-filter:blur(3px);
+ z-index:180
+}
+
+.music-overlay.show{
+ display:flex
+}
+
+.music-panel{
+ width:min(520px,100%);
+ padding:14px;
+ border:2px ridge #9c7c43;
+ border-radius:4px;
+ background:
+ radial-gradient(circle at 10% 10%,rgba(55,88,42,.20),transparent 30%),
+ linear-gradient(#171b13,#080a08);
+ box-shadow:0 -7px 24px #000c
+}
+
+.music-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ padding-bottom:9px;
+ margin-bottom:10px;
+ border-bottom:1px solid #705a34
+}
+
+.music-title{
+ font-weight:bold;
+ color:#efd79c;
+ letter-spacing:1px
+}
+
+.music-now{
+ min-height:24px;
+ margin-bottom:9px;
+ text-align:center;
+ color:#b9d689;
+ font-size:12px
+}
+
+.music-list{
+ display:grid;
+ gap:7px
+}
+
+.music-track{
+ width:100%;
+ padding:11px 8px;
+ border:1px solid #6f5934;
+ border-radius:3px;
+ background:linear-gradient(#242719,#11150e);
+ color:#ead9ac;
+ font-weight:bold;
+ text-align:left
+}
+
+.music-track.playing{
+ border-color:#a9c86d;
+ color:#dff0be;
+ box-shadow:0 0 9px rgba(144,185,99,.22)
+}
+
+.music-controls{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin-top:11px
+}
+
+.music-control{
+ padding:10px 5px;
+ border:1px solid #80683b;
+ border-radius:3px;
+ background:linear-gradient(#342a1a,#17110c);
+ color:#ead9ac;
+ font-weight:bold
+}
+
+.music-volume{
+ margin-top:12px;
+ padding-top:10px;
+ border-top:1px solid #59492c;
+ display:flex;
+ align-items:center;
+ gap:9px;
+ color:#cdbb8d;
+ font-size:11px
+}
+
+.music-volume input{
+ flex:1
+}
+
+@media(max-width:700px) and (orientation:portrait){
+
+ .music-button{
+  padding:7px 7px;
+  font-size:0
+ }
+
+ .music-button:before{
+  content:"🎵";
+  font-size:16px
+ }
+
+}
 main{
  width:100%;
  max-width:1120px;
