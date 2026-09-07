@@ -3816,16 +3816,20 @@ const turnOverlay=
 
 const turnOrderList=
  document.getElementById("turnOrderList");
-
+let turnSetupCombatants=[];
+let turnSetupOrder=[];
+let turnOrder=[];
+let currentTurnIndex=0;
+function openTurnPanel(){
 function openTurnPanel(){
 
- const combatants=[];
+ turnSetupCombatants=[];
 
  gameState.allies.forEach(function(fighter,index){
 
   if(!fighter)return;
 
-  combatants.push({
+  turnSetupCombatants.push({
    side:"ally",
    slot:index,
    name:getClassName(fighter.clase),
@@ -3840,7 +3844,7 @@ function openTurnPanel(){
 
   const row=Math.floor(index/2)+1;
 
-  combatants.push({
+  turnSetupCombatants.push({
    side:"enemy",
    slot:index,
    name:fighter.name,
@@ -3849,36 +3853,83 @@ function openTurnPanel(){
 
  });
 
- if(combatants.length===0){
+ turnSetupOrder=[];
+
+ renderTurnSetup();
+
+ turnOverlay.classList.add("show");
+
+}
+
+function renderTurnSetup(){
+
+ if(turnSetupCombatants.length===0){
 
   turnOrderList.innerHTML=
    "No hay combatientes en el campo.";
 
- }else{
-
-  turnOrderList.innerHTML=
-   combatants
-    .map(function(fighter){
-
-     return `
-      <div style="
-       padding:10px;
-       margin:5px 0;
-       border:1px solid #6f5934;
-       background:#0d130b;
-       color:#ead9ac;
-       font-weight:bold;
-      ">
-       ${escapeHtml(fighter.label)}
-      </div>
-     `;
-
-    })
-    .join("");
+  return;
 
  }
 
- turnOverlay.classList.add("show");
+ turnOrderList.innerHTML=
+  turnSetupCombatants
+   .map(function(fighter,index){
+
+    const selectedPosition=
+     turnSetupOrder.indexOf(index);
+
+    const number=
+     selectedPosition>=0
+     ?selectedPosition+1
+     :"";
+
+    return `
+     <button
+      type="button"
+      data-turn-fighter="${index}"
+      style="
+       width:100%;
+       padding:11px;
+       margin:5px 0;
+       border:1px solid ${selectedPosition>=0?"#c7a45b":"#6f5934"};
+       background:${selectedPosition>=0?"#29321c":"#0d130b"};
+       color:#ead9ac;
+       font-weight:bold;
+       text-align:left;
+      "
+     >
+      ${number?number+"️⃣ ":""}
+      ${escapeHtml(fighter.label)}
+     </button>
+    `;
+
+   })
+   .join("");
+
+ document
+  .querySelectorAll("[data-turn-fighter]")
+  .forEach(function(button){
+
+   button.addEventListener(
+    "click",
+    function(){
+
+     const index=
+      Number(button.dataset.turnFighter);
+
+     if(turnSetupOrder.includes(index)){
+      return;
+     }
+
+     turnSetupOrder.push(index);
+
+     renderTurnSetup();
+
+    }
+   );
+
+  });
 
 }
 
