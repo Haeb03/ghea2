@@ -1678,7 +1678,35 @@ async function instalarGhea2() {
  </div>
 
 </main>
+<!-- ===== ORDEN DE TURNOS ===== -->
 
+<div class="overlay" id="turnOverlay">
+
+ <div class="editor">
+
+  <div class="editor-top">
+
+   <div class="music-title">
+    ⚔️ ORDEN DE TURNOS
+   </div>
+
+   <button
+    class="close-button"
+    id="turnCloseBtn"
+    aria-label="Cerrar orden de turnos"
+   >
+    ×
+   </button>
+
+  </div>
+
+  <div id="turnOrderList">
+   Los combatientes aparecerán aquí.
+  </div>
+
+ </div>
+
+</div>
 <!-- ===== EDITOR ===== -->
 
 <div
@@ -3781,6 +3809,50 @@ musicOverlay.addEventListener(
 
  }
 );
+/* ===== TURNOS ===== */
+
+const turnOverlay=
+ document.getElementById("turnOverlay");
+
+const turnOrderList=
+ document.getElementById("turnOrderList");
+
+function openTurnPanel(){
+
+ turnOverlay.classList.add("show");
+
+}
+
+function closeTurnPanel(){
+
+ turnOverlay.classList.remove("show");
+
+}
+
+document
+ .getElementById("turnOrderBtn")
+ .addEventListener(
+  "click",
+  openTurnPanel
+ );
+
+document
+ .getElementById("turnCloseBtn")
+ .addEventListener(
+  "click",
+  closeTurnPanel
+ );
+
+turnOverlay.addEventListener(
+ "click",
+ function(event){
+
+  if(event.target===turnOverlay){
+   closeTurnPanel();
+  }
+
+ }
+);  
 /* ===== EVENTOS ===== */
 
 allyFormation.addEventListener(
