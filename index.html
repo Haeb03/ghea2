@@ -3253,7 +3253,18 @@ function handleSlotClick(event){
   ){
 
    const mt=getTeam(movingSide);
+    
+turnOrder.forEach(function(turnFighter){
 
+ if(
+  turnFighter.side===movingSide &&
+  turnFighter.slot===movingSlot
+ ){
+  turnFighter.slot=index;
+ }
+
+});
+    
    mt[index]=mt[movingSlot];
    mt[movingSlot]=null;
 
