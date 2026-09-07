@@ -3985,9 +3985,33 @@ function startTurnOrder(){
 
  currentTurnIndex=0;
 
- closeTurnPanel();
+updateTurnDisplay();
+
+closeTurnPanel();
 
     }
+  function updateTurnDisplay(){
+
+ const turnCurrent=
+  document.getElementById("turnCurrent");
+
+ if(turnOrder.length===0){
+
+  turnCurrent.textContent=
+   "Sin orden de turno";
+
+  return;
+
+ }
+
+ const fighter=
+  turnOrder[currentTurnIndex];
+
+ turnCurrent.textContent=
+  `Turno ${currentTurnIndex+1}/${turnOrder.length} · ${fighter.name}`;
+
+}
+  
 function closeTurnPanel(){
 
  turnOverlay.classList.remove("show");
