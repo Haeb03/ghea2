@@ -1703,7 +1703,30 @@ async function instalarGhea2() {
   <div id="turnOrderList">
    Los combatientes aparecerán aquí.
   </div>
+<div
+ style="
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+ "
+>
 
+ <button
+  class="turn-order-button"
+  id="turnUndoBtn"
+ >
+  ↩ Deshacer
+ </button>
+
+ <button
+  class="turn-order-button"
+  id="turnStartBtn"
+ >
+  ⚔️ Iniciar
+ </button>
+
+</div>
  </div>
 
 </div>
@@ -3931,7 +3954,40 @@ function renderTurnSetup(){
   });
 
 }
+function undoTurnSetup(){
 
+ if(turnSetupOrder.length===0){
+  return;
+ }
+
+ turnSetupOrder.pop();
+
+ renderTurnSetup();
+
+}
+
+function startTurnOrder(){
+
+ if(
+  turnSetupCombatants.length===0 ||
+  turnSetupOrder.length!==turnSetupCombatants.length
+ ){
+  alert("Elegí el orden de todos los combatientes.");
+  return;
+ }
+
+ turnOrder=
+  turnSetupOrder.map(function(index){
+
+   return turnSetupCombatants[index];
+
+  });
+
+ currentTurnIndex=0;
+
+ closeTurnPanel();
+
+    }
 function closeTurnPanel(){
 
  turnOverlay.classList.remove("show");
@@ -3962,6 +4018,19 @@ turnOverlay.addEventListener(
 
  }
 );  
+  document
+ .getElementById("turnUndoBtn")
+ .addEventListener(
+  "click",
+  undoTurnSetup
+ );
+
+document
+ .getElementById("turnStartBtn")
+ .addEventListener(
+  "click",
+  startTurnOrder
+ );
 /* ===== EVENTOS ===== */
 
 allyFormation.addEventListener(
