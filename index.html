@@ -476,7 +476,17 @@ main{
  color:#c86656;
  border-color:#7e3b32
 }
-
+  
+.slot.active-turn{
+ border:2px solid #e7c568 !important;
+ box-shadow:
+  0 0 10px rgba(231,197,104,.75),
+  0 0 22px rgba(231,197,104,.35),
+  inset 0 0 18px rgba(231,197,104,.10);
+ transform:scale(1.02);
+ z-index:4;
+}
+  
 .slot.move-target{
  border:2px solid #e1bd64;
  opacity:1;
@@ -2769,7 +2779,21 @@ function renderFormation(side,element){
   slot.className="slot";
   slot.dataset.side=side;
   slot.dataset.slot=index;
+if(turnOrder.length>0){
 
+ const activeTurn=
+  turnOrder[currentTurnIndex];
+
+ if(
+  activeTurn &&
+  activeTurn.side===side &&
+  activeTurn.slot===index
+ ){
+  slot.classList.add("active-turn");
+ }
+
+   }
+   
   if(fighter){
 
    slot.classList.add("occupied");
