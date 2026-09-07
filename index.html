@@ -3819,6 +3819,65 @@ const turnOrderList=
 
 function openTurnPanel(){
 
+ const combatants=[];
+
+ gameState.allies.forEach(function(fighter,index){
+
+  if(!fighter)return;
+
+  combatants.push({
+   side:"ally",
+   slot:index,
+   name:getClassName(fighter.clase),
+   label:"🛡️ "+getClassName(fighter.clase)
+  });
+
+ });
+
+ gameState.enemies.forEach(function(fighter,index){
+
+  if(!fighter)return;
+
+  const row=Math.floor(index/2)+1;
+
+  combatants.push({
+   side:"enemy",
+   slot:index,
+   name:fighter.name,
+   label:"👹 "+fighter.name+" · Fila "+row
+  });
+
+ });
+
+ if(combatants.length===0){
+
+  turnOrderList.innerHTML=
+   "No hay combatientes en el campo.";
+
+ }else{
+
+  turnOrderList.innerHTML=
+   combatants
+    .map(function(fighter){
+
+     return `
+      <div style="
+       padding:10px;
+       margin:5px 0;
+       border:1px solid #6f5934;
+       background:#0d130b;
+       color:#ead9ac;
+       font-weight:bold;
+      ">
+       ${escapeHtml(fighter.label)}
+      </div>
+     `;
+
+    })
+    .join("");
+
+ }
+
  turnOverlay.classList.add("show");
 
 }
