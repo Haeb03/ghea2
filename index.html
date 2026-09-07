@@ -4055,6 +4055,38 @@ document
   "click",
   startTurnOrder
  );
+  document
+ .getElementById("turnNextBtn")
+ .addEventListener(
+  "click",
+  function(){
+
+   if(turnOrder.length===0)return;
+
+   currentTurnIndex=
+    (currentTurnIndex+1)%turnOrder.length;
+
+   updateTurnDisplay();
+
+  }
+ );
+
+document
+ .getElementById("turnPrevBtn")
+ .addEventListener(
+  "click",
+  function(){
+
+   if(turnOrder.length===0)return;
+
+   currentTurnIndex=
+    (currentTurnIndex-1+turnOrder.length)%turnOrder.length;
+
+   updateTurnDisplay();
+
+  }
+ );
+  
 /* ===== EVENTOS ===== */
 
 allyFormation.addEventListener(
