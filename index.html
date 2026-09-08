@@ -2752,6 +2752,29 @@ function getStatuses(f){
  return s;
 
 }
+
+  function getEnemyMaxLife(name){
+  const n=String(name||"")
+    .trim()
+    .toLowerCase();
+
+  const lives={
+    "muñeco de entrenamiento":10,
+    "espíritu del bosque":15,
+    "elemental de fuego":10,
+    "profesor alaric":25,
+    "jabalí salvaje":10,
+    "goblin saqueador":12,
+    "goblin guerrero":12,
+    "goblin chamán":12,
+    "goblin arquero":10,
+    "señor goblin":15,
+    "lobo adiestrado":12
+  };
+
+  return lives[n] ?? 10;
+}
+  
 function getEnemyAvatar(name){
 
  const n=String(name||"")
@@ -4465,10 +4488,19 @@ nameInput.addEventListener(
    getTeam("enemy")[selectedSlot];
 
   f.name=
-   nameInput.value;
+ nameInput.value;
 
-  save();
-  render();
+const maxLife=
+ getEnemyMaxLife(f.name);
+
+f.vidaMaxima=
+ maxLife;
+
+f.vida=
+ maxLife;
+
+save();
+render();
 
  }
 );
