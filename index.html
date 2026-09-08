@@ -2450,11 +2450,12 @@ function createFighter(side){
   side:"enemy",
   name:"Enemigo",
   vida:10,
+  vidaMaxima:10,
   escudo:0,
   quemadura:0,
   veneno:0,
   herida:0
- };
+};
 
 }
 
@@ -2488,7 +2489,30 @@ function normalizeFighter(fighter,side){
   0,
   Math.floor(Number(fighter.herida)||0)
  );
+  
+if(side==="enemy"){
 
+ if(
+  !Number.isFinite(Number(fighter.vidaMaxima)) ||
+  Number(fighter.vidaMaxima)<1
+ ){
+  fighter.vidaMaxima=Math.max(
+   1,
+   fighter.vida
+  );
+ }
+
+ fighter.vidaMaxima=Math.floor(
+  Number(fighter.vidaMaxima)
+ );
+
+ fighter.vida=Math.min(
+  fighter.vida,
+  fighter.vidaMaxima
+ );
+
+}
+  
  if(side==="ally"){
 
   if(typeof fighter.clase!=="string"){
@@ -2878,7 +2902,7 @@ if(turnOrder.length>0){
    const lifeDisplay=
     side==="ally"
     ?`${fighter.vida}/${fighter.vidaMaxima}`
-    :fighter.vida;
+    :`${fighter.vida}/${fighter.vidaMaxima}`;
 
    const displayName=
     side==="ally"
@@ -3548,6 +3572,7 @@ function parseEncounterQR(text){
    side:"enemy",
    name:name,
    vida:vida,
+   vidaMaxima:vida,
    escudo:0,
    quemadura:0,
    veneno:0,
