@@ -1895,7 +1895,45 @@ async function instalarGhea2() {
    </div>
 
   </div>
+<!-- ===== DAÑO AUTOMÁTICO ===== -->
 
+<div
+ class="stat"
+ style="margin-top:8px"
+>
+
+ <div class="stat-title">
+  💥 DAÑO RECIBIDO
+ </div>
+
+ <div class="counter">
+
+  <input
+   class="editable-value"
+   id="damageValue"
+   type="number"
+   min="0"
+   inputmode="numeric"
+   value="0"
+   aria-label="Daño recibido"
+  >
+
+  <button
+   id="applyDamageBtn"
+   style="
+    width:auto;
+    min-width:120px;
+    border-radius:3px;
+    padding:0 12px;
+   "
+  >
+   Aplicar daño
+  </button>
+
+ </div>
+
+</div>
+   
   <div class="states-title">
    ESTADOS
   </div>
@@ -3065,7 +3103,49 @@ function setClass(value){
 }
 
 /* ===== CAMBIO DE STATS ===== */
+  
+function applyDamage(){
 
+ if(
+  selectedSide===null ||
+  selectedSlot===null
+ ){
+  return;
+ }
+
+ const damageInput=
+  document.getElementById("damageValue");
+
+ let damage=Math.max(
+  0,
+  Math.floor(Number(damageInput.value)||0)
+ );
+
+ if(damage===0){
+  return;
+ }
+
+ const f=
+  getTeam(selectedSide)[selectedSlot];
+
+ const absorbed=
+  Math.min(f.escudo,damage);
+
+ f.escudo-=absorbed;
+ damage-=absorbed;
+
+ if(damage>0){
+  f.vida=Math.max(0,f.vida-damage);
+ }
+
+ damageInput.value=0;
+
+ save();
+ updateEditor();
+ render();
+
+}
+  
 function changeStat(stat,amount){
 
  if(
@@ -4235,6 +4315,13 @@ undoLifeBtn.addEventListener(
  "click",
  undoLifeReward
 );
+  
+document
+ .getElementById("applyDamageBtn")
+ .addEventListener(
+  "click",
+  applyDamage
+ );
 
 /* Clase del Aventurero */
 
