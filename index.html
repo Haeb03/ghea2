@@ -3231,6 +3231,47 @@ function applyDamage(){
  render();
 
 }
+
+ function applyHeal(){
+
+ if(
+  selectedSide===null ||
+  selectedSlot===null
+ ){
+  return;
+ }
+
+ const f=
+  getTeam(selectedSide)[selectedSlot];
+
+ if(!f)return;
+
+ const input=
+  document.getElementById("healValue");
+
+ const amount=
+  Math.max(
+   0,
+   Math.floor(
+    Number(input.value)||0
+   )
+  );
+
+ if(amount<=0)return;
+
+ f.vida=
+  Math.min(
+   f.vida+amount,
+   f.vidaMaxima
+  );
+
+ input.value=0;
+
+ save();
+ updateEditor();
+ render();
+
+} 
   
 function changeStat(stat,amount){
 
@@ -4408,6 +4449,13 @@ document
  .addEventListener(
   "click",
   applyDamage
+ );
+
+  document
+ .getElementById("applyHealBtn")
+ .addEventListener(
+  "click",
+  applyHeal
  );
 
 /* Clase del Aventurero */
