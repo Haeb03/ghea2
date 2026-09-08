@@ -1895,7 +1895,7 @@ async function instalarGhea2() {
    </div>
 
   </div>
-<!-- ===== DAÑO AUTOMÁTICO ===== -->
+<!-- ===== ACCIONES RÁPIDAS ===== -->
 
 <div
  class="stat"
@@ -1903,37 +1903,76 @@ async function instalarGhea2() {
 >
 
  <div class="stat-title">
-  💥 DAÑO RECIBIDO
+  ACCIONES RÁPIDAS
  </div>
 
- <div class="counter">
+ <div
+  style="
+   display:grid;
+   grid-template-columns:1fr 1fr;
+   gap:8px;
+  "
+ >
 
-  <input
-   class="editable-value"
-   id="damageValue"
-   type="number"
-   min="0"
-   inputmode="numeric"
-   value="0"
-   aria-label="Daño recibido"
-  >
+  <div class="counter">
 
-  <button
-   id="applyDamageBtn"
-   style="
-    width:auto;
-    min-width:120px;
-    border-radius:3px;
-    padding:0 12px;
-   "
-  >
-   Aplicar daño
-  </button>
+   <span>💥</span>
+
+   <input
+    class="editable-value"
+    id="damageValue"
+    type="number"
+    min="0"
+    inputmode="numeric"
+    value="0"
+    aria-label="Daño recibido"
+   >
+
+   <button
+    id="applyDamageBtn"
+    style="
+     width:auto;
+     min-width:70px;
+     border-radius:3px;
+     padding:0 8px;
+    "
+   >
+    Aplicar
+   </button>
+
+  </div>
+
+  <div class="counter">
+
+   <span>❤️</span>
+
+   <input
+    class="editable-value"
+    id="healValue"
+    type="number"
+    min="0"
+    inputmode="numeric"
+    value="0"
+    aria-label="Curación"
+   >
+
+   <button
+    id="applyHealBtn"
+    style="
+     width:auto;
+     min-width:70px;
+     border-radius:3px;
+     padding:0 8px;
+    "
+   >
+    Aplicar
+   </button>
+
+  </div>
 
  </div>
-
 </div>
-   
+
   <div class="states-title">
    ESTADOS
   </div>
