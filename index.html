@@ -4532,33 +4532,46 @@ goldValue.addEventListener(
 /* Nombre de enemigos */
 
 nameInput.addEventListener(
+nameInput.addEventListener(
  "input",
  function(){
 
   if(
-   selectedSide!=="enemy" ||
+   selectedSide===null ||
    selectedSlot===null
   ){
    return;
   }
 
   const f=
-   getTeam("enemy")[selectedSlot];
+   getTeam(selectedSide)[selectedSlot];
 
-  f.name=
- nameInput.value;
+  if(
+   selectedSide==="ally" &&
+   f.clase==="aliado"
+  ){
 
-const maxLife=
- getEnemyMaxLife(f.name);
+   f.name=nameInput.value;
 
-f.vidaMaxima=
- maxLife;
+   save();
+   render();
 
-f.vida=
- maxLife;
+   return;
+  }
 
-save();
-render();
+  if(selectedSide==="enemy"){
+
+   f.name=nameInput.value;
+
+   const maxLife=
+    getEnemyMaxLife(f.name);
+
+   f.vidaMaxima=maxLife;
+   f.vida=maxLife;
+
+   save();
+   render();
+  }
 
  }
 );
