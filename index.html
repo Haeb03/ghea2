@@ -3165,7 +3165,12 @@ function setClass(value){
   getTeam("ally")[selectedSlot];
 
  f.clase=value;
+
+if(value==="aliado"){
+ f.name="Aliado";
+}else{
  f.name=getClassName(value);
+}
 
  if(
   value &&
