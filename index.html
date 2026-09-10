@@ -2928,9 +2928,13 @@ if(turnOrder.length>0){
     :`${fighter.vida}/${fighter.vidaMaxima}`;
 
    const displayName=
-    side==="ally"
-    ?getClassName(fighter.clase)
-    :fighter.name;
+ side==="ally"
+ ?(
+   fighter.clase==="aliado"
+   ?fighter.name
+   :getClassName(fighter.clase)
+  )
+ :fighter.name;
 
    const fighterAvatar=
  side==="enemy"
