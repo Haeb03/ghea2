@@ -3112,9 +3112,12 @@ function updateEditor(){
    f.herida>0
   );
 
- if(selectedSide==="ally"){
+ if(
+ selectedSide==="ally" &&
+ f.clase!=="aliado"
+){
 
-  allyProgression.classList.remove("hidden");
+ allyProgression.classList.remove("hidden");
 
   classSelect.value=
    f.clase || "";
