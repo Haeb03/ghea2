@@ -2528,14 +2528,25 @@ if(side==="enemy"){
    fighter.clase="";
   }
 
-  if(fighter.clase){
-   fighter.name=getClassName(fighter.clase);
-  }else if(
-   !fighter.name ||
-   fighter.name==="Nombre"
-  ){
-   fighter.name="Aventurero";
-  }
+  if(
+ fighter.clase &&
+ fighter.clase!=="aliado"
+){
+ fighter.name=getClassName(fighter.clase);
+
+}else 
+if(fighter.clase==="aliado"){
+
+ if(!fighter.name){
+  fighter.name="Aliado";
+ }
+
+}else if(
+ !fighter.name ||
+ fighter.name==="Nombre"
+){
+ fighter.name="Aventurero";
+}
 
   if(
    !Number.isFinite(Number(fighter.vidaMaxima)) ||
