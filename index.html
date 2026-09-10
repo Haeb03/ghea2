@@ -3027,14 +3027,19 @@ function openEditor(side,slot){
 
  if(side==="ally"){
 
-  nameInput.style.display="none";
+ classSelect.style.display="block";
 
-  classSelect.style.display="block";
+ classSelect.value=
+  f.clase || "";
 
-  classSelect.value=
-   f.clase || "";
-
+ if(f.clase==="aliado"){
+  nameInput.style.display="block";
+  nameInput.value=f.name || "Aliado";
  }else{
+  nameInput.style.display="none";
+ }
+
+}else{
 
   classSelect.style.display="none";
 
