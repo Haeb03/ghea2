@@ -3160,6 +3160,16 @@ function updateEditor(){
    f.herida>0
   );
 
+if(
+ selectedSide==="ally" &&
+ f.clase==="aliado"
+){
+ specialAllyStats.classList.remove("hidden");
+ specialAllyMaxLife.value=f.vidaMaxima;
+}else{
+ specialAllyStats.classList.add("hidden");
+}
+  
  if(
  selectedSide==="ally" &&
  f.clase!=="aliado"
