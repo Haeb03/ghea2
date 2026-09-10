@@ -2089,6 +2089,40 @@ async function instalarGhea2() {
 
   </div>
 
+   <!-- ===== DATOS DEL ALIADO ===== -->
+
+<div
+ class="ally-progression hidden"
+ id="specialAllyStats"
+>
+
+ <div class="progress-title">
+  🤝 DATOS DEL ALIADO
+ </div>
+
+ <div class="progress-info">
+
+  <div class="progress-card">
+
+   <div class="progress-card-title">
+    ❤️ VIDA MÁX.
+   </div>
+
+   <input
+    id="specialAllyMaxLife"
+    class="progress-input"
+    type="number"
+    min="1"
+    inputmode="numeric"
+    value="10"
+   >
+
+  </div>
+
+ </div>
+
+</div>
+
   <!-- ===== FICHA DIGITAL AVENTURERO ===== -->
 
   <div
@@ -2389,6 +2423,8 @@ const goldValue=document.getElementById("goldValue");
 
 const allyProgression=document.getElementById("allyProgression");
 const vidaMaxValue=document.getElementById("vidaMaxValue");
+const specialAllyStats=document.getElementById("specialAllyStats");
+const specialAllyMaxLife=document.getElementById("specialAllyMaxLife");
 const accionesValue=document.getElementById("accionesValue");
 const crecimientoValue=document.getElementById("crecimientoValue");
 const umbralValue=document.getElementById("umbralValue");
