@@ -2816,8 +2816,10 @@ function getStatuses(f){
     "goblin guerrero":12,
     "goblin chamán":12,
     "goblin arquero":10,
-    "señor goblin":15,
-    "lobo adiestrado":12
+    "señor goblin":16,
+    "lobo adiestrado":12, 
+    "lobo":12,
+    "nereza":30
   };
 
   return lives[n] ?? 10;
@@ -2846,6 +2848,8 @@ function getEnemyAvatar(name){
   ["espiritu del bosque","espiritu-bosque.png"],
   ["muñeco de entrenamiento","muneco-entrenamiento.png"],
   ["muneco de entrenamiento","muneco-entrenamiento.png"]
+  ["nereza","nereza.png"],
+  ["lobo","lobo.png"],
  ];
 
  for(const [enemy,file] of avatars){
