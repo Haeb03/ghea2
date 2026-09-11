@@ -4167,16 +4167,21 @@ function openTurnPanel(){
 
  gameState.allies.forEach(function(fighter,index){
 
-  if(!fighter)return;
+ if(!fighter)return;
 
-  turnSetupCombatants.push({
-   side:"ally",
-   slot:index,
-   name:getClassName(fighter.clase),
-   label:"🛡️ "+getClassName(fighter.clase)
-  });
+ const allyName=
+  fighter.clase==="aliado"
+  ?fighter.name
+  :getClassName(fighter.clase);
 
+ turnSetupCombatants.push({
+  side:"ally",
+  slot:index,
+  name:allyName,
+  label:"🛡️ "+allyName
  });
+
+});
 
  gameState.enemies.forEach(function(fighter,index){
 
