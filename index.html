@@ -2859,13 +2859,25 @@ function getEnemyAvatar(name){
  return null;
 
 }
-function getAllyAvatar(clase){
+
+function getAllyAvatar(fighter){
+
+ if(
+  fighter.clase==="aliado" &&
+  String(fighter.name || "").trim().toLowerCase()==="zirka"
+ ){
+  return "./avatars/zirka.png";
+ }
 
  const avatars={
   guerrero:"./avatars/guerrero.png",
   mago:"./avatars/mago-humano.png",
   asesina:"./avatars/asesina.png"
  };
+
+ return avatars[fighter.clase] || null;
+
+}
 
  return avatars[clase] || null;
 
@@ -2987,7 +2999,7 @@ if(turnOrder.length>0){
    const fighterAvatar=
  side==="enemy"
  ?getEnemyAvatar(fighter.name)
- :getAllyAvatar(fighter.clase);
+ :getAllyAvatar(fighter);
 
 slot.innerHTML=`
  <div class="fighter">
