@@ -4507,6 +4507,36 @@ vidaMaxValue.addEventListener(
  }
 );
 
+/* Vida máxima del Aliado */
+
+specialAllyMaxLife.addEventListener(
+ "change",
+ function(){
+
+  setVidaMaxima(
+   specialAllyMaxLife.value
+  );
+
+ }
+);
+
+specialAllyMaxLife.addEventListener(
+ "keydown",
+ function(e){
+
+  if(e.key==="Enter"){
+
+   setVidaMaxima(
+    specialAllyMaxLife.value
+   );
+
+   specialAllyMaxLife.blur();
+
+  }
+
+ }
+);
+  
 /* Recompensa */
 
 rewardLifeBtn.addEventListener(
