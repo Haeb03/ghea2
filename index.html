@@ -2864,6 +2864,22 @@ function getEnemyAvatar(name){
 
 }
 
+function getSpecialAllyMaxLife(name){
+
+ const nombre=
+  String(name || "")
+  .trim()
+  .toLowerCase();
+
+ const vidas={
+  "zirka":15,
+  "señor goblin":16,
+  "senor goblin":16
+ };
+
+ return vidas[nombre] || null;
+}
+  
 function getAllyAvatar(fighter){
 
  if(fighter.clase==="aliado"){
@@ -4667,17 +4683,26 @@ nameInput.addEventListener(
    getTeam(selectedSide)[selectedSlot];
 
   if(
-   selectedSide==="ally" &&
-   f.clase==="aliado"
-  ){
+ selectedSide==="ally" &&
+ f.clase==="aliado"
+){
 
-   f.name=nameInput.value;
+ f.name=nameInput.value;
 
-   save();
-   render();
+ const maxLife=
+  getSpecialAllyMaxLife(f.name);
 
-   return;
-  }
+ if(maxLife){
+  f.vidaMaxima=maxLife;
+  f.vida=maxLife;
+ }
+
+ save();
+ render();
+ updateEditor();
+
+ return;
+      }
 
   if(selectedSide==="enemy"){
 
