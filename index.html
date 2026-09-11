@@ -2089,40 +2089,6 @@ async function instalarGhea2() {
 
   </div>
 
-   <!-- ===== DATOS DEL ALIADO ===== -->
-
-<div
- class="ally-progression hidden"
- id="specialAllyStats"
->
-
- <div class="progress-title">
-  🤝 DATOS DEL ALIADO
- </div>
-
- <div class="progress-info">
-
-  <div class="progress-card">
-
-   <div class="progress-card-title">
-    ❤️ VIDA MÁX.
-   </div>
-
-   <input
-    id="specialAllyMaxLife"
-    class="progress-input"
-    type="number"
-    min="1"
-    inputmode="numeric"
-    value="10"
-   >
-
-  </div>
-
- </div>
-
-</div>
-
   <!-- ===== FICHA DIGITAL AVENTURERO ===== -->
 
   <div
@@ -2409,29 +2375,22 @@ async function instalarGhea2() {
 
 const STORAGE_KEY="ghea2-state-v1";
 const GOLD_STORAGE_KEY="ghea2-gold-v1";
-
 const allyFormation=document.getElementById("allyFormation");
 const enemyFormation=document.getElementById("enemyFormation");
 const overlay=document.getElementById("overlay");
-
 const nameInput=document.getElementById("nameInput");
 const classSelect=document.getElementById("classSelect");
-
 const editorIcon=document.getElementById("editorIcon");
 const moveMessage=document.getElementById("moveMessage");
 const goldValue=document.getElementById("goldValue");
-
 const allyProgression=document.getElementById("allyProgression");
 const vidaMaxValue=document.getElementById("vidaMaxValue");
-const specialAllyStats=document.getElementById("specialAllyStats");
-const specialAllyMaxLife=document.getElementById("specialAllyMaxLife");
 const accionesValue=document.getElementById("accionesValue");
 const crecimientoValue=document.getElementById("crecimientoValue");
 const umbralValue=document.getElementById("umbralValue");
 const growthDots=document.getElementById("growthDots");
 const rewardLifeBtn=document.getElementById("rewardLifeBtn");
 const undoLifeBtn=document.getElementById("undoLifeBtn");
-
 const qrOverlay=document.getElementById("qrOverlay");
 const qrVideo=document.getElementById("qrVideo");
 const qrStatus=document.getElementById("qrStatus");
@@ -3197,16 +3156,6 @@ function updateEditor(){
    f.herida>0
   );
 
-if(
- selectedSide==="ally" &&
- f.clase==="aliado"
-){
- specialAllyStats.classList.remove("hidden");
- specialAllyMaxLife.value=f.vidaMaxima;
-}else{
- specialAllyStats.classList.add("hidden");
-}
-  
  if(
  selectedSide==="ally" &&
  f.clase!=="aliado"
@@ -4549,36 +4498,6 @@ vidaMaxValue.addEventListener(
  }
 );
 
-/* Vida máxima del Aliado */
-
-specialAllyMaxLife.addEventListener(
- "change",
- function(){
-
-  setVidaMaxima(
-   specialAllyMaxLife.value
-  );
-
- }
-);
-
-specialAllyMaxLife.addEventListener(
- "keydown",
- function(e){
-
-  if(e.key==="Enter"){
-
-   setVidaMaxima(
-    specialAllyMaxLife.value
-   );
-
-   specialAllyMaxLife.blur();
-
-  }
-
- }
-);
-  
 /* Recompensa */
 
 rewardLifeBtn.addEventListener(
