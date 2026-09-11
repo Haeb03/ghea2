@@ -2862,11 +2862,19 @@ function getEnemyAvatar(name){
 
 function getAllyAvatar(fighter){
 
- if(
-  fighter.clase==="aliado" &&
-  String(fighter.name || "").trim().toLowerCase()==="zirka"
- ){
-  return "./avatars/zirka.png";
+ if(fighter.clase==="aliado"){
+
+ const nombre=
+  String(fighter.name || "")
+  .trim()
+  .toLowerCase();
+
+ const aliadosEspeciales={
+  "zirka":"./avatars/zirka.png",
+  "señor goblin":"./avatars/senor-goblin.png"
+ };
+
+ return aliadosEspeciales[nombre] || null;
  }
 
  const avatars={
